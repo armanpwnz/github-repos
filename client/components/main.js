@@ -1,15 +1,26 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { history } from '../redux'
 
 const Main = () => {
-  const [input, setInput] = useState('')
-  const onChange = (e) => setInput(e.target.value)
+  const [value, setValue] = useState('')
+  const onChange = (e) => setValue(e.target.value)
+  const onClick = () => {
+    history.push(`/${value}`)
+  }
   return (
-    <div>
-      <input id="input-field" type="text" value={input} onChange={onChange} />
-      <Link id="search-button" to={`/${input}`}>
-        Search
-      </Link>
+    <div className="flex items-center justify-center h-screen">
+      <div className="bg-indigo-800 text-white font-bold rounded-lg border shadow-lg p-10">
+        <input
+          className="text-black"
+          id="input-field"
+          type="text"
+          value={value}
+          onChange={onChange}
+        />
+        <button className="m-2" id="search-button" type="button" onClick={onClick}>
+          Send
+        </button>
+      </div>
     </div>
   )
 }
@@ -17,3 +28,4 @@ const Main = () => {
 Main.propTypes = {}
 
 export default Main
+
