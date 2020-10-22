@@ -82,9 +82,9 @@ export default (props) => {
       <ConnectedRouter history={history} location={props.location} context={props.context}>
         <StartupConnected>
           <Switch>
-            <Route exact path="/" component={() => <Home />} />
-            <Route exact path="/:userName" component={() => <Home />} />
-            <Route exact path="/:userName/:repoName" component={() => <Home />} />
+            <Route exact path="/" component={() => <DummyView />} />
+            <Route exact path="/dashboard" component={() => <Home />} />
+            <Route exact path="/*" component={() => <DummyView />} />
             <PrivateRouteConnected exact path="/hidden-route" component={() => <DummyView />} />
             <Route component={() => <NotFound />} />
           </Switch>

@@ -1,34 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useParams, Link } from 'react-router-dom'
+
 import Header from './header'
 
 const RepoList = () => {
   const { userName } = useParams()
-  const [repos, setRepos] = useState('')
+  const [value, setValue] = useState([])
+
   useEffect(() => {
-    async function getUserRepos(username) {
-      const userRepos = await axios(`https://api.github.com/users/${username}/repos`).then(
-        ({ data }) => data
-      )
-      setRepos(
-        userRepos.map((repo) => (
-          <Link key={`/${username}/${repo.name}`} to={`/${username}/${repo.name}`}>
-            <p>{repo.name}</p>
-          </Link>
-        ))
-      )
-    }
-    getUserRepos(userName)
+    axios.get(`https://api.github.com/users/${userName}/repos`).then((it) => {
+      const repName = it.data.map((item) => item.name)
+      setValue(repName)
+    })
   }, [userName])
 
   return (
     <div>
       <Header />
-      {repos}
+      <div className="flex items-center justify-center h-screen">
+        <div className="bg-indigo-800 text-white font-bold rounded-lg border shadow-lg p-10">
+          <ul>
+            {value.map((repo) => {
+              return (
+                <li key={repo}>
+                  <Link to={`${userName}/${repo}`}>{repo}</Link>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }
 
 RepoList.propTypes = {}
+
 export default RepoList
