@@ -13,7 +13,7 @@ const Dummy = () => {
       <Switch>
         <Route exact path="/" component={() => <Main />} />
         <Route exact path="/:userName" component={() => <RepoList />} />
-        <Route exact path="/:userName/:repositoryName" component={() => <Repo />} />
+        <Route exact path="/:userName/:repoName" component={() => <Repo />} />
       </Switch>
     </div>
   )
